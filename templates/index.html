@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+        }
+        .red {
+            background-color: red;
+            padding: 10px; /* Added padding for better visual appearance */
+        }
+        .green {
+            background-color: green;
+        }
+        .darkred {
+            background-color: #220000;
+        }
+        .darkgreen {
+            background-color: #001d00;
+            font-weight: bold;
+        }
+        body {
+            background-color: #f2f2f2;
+            font-weight: bold; /* Make all text bold */
+        }
+        .bold-text {
+            font-weight: bold;
+        }
+        .upload-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .upload-box {
+            background-color: red;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: white; /* Set text color to white */
+        }
+        .upload-box img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="display:flex; justify-content: center;">Prediction Result</h1>
+    <div style="width: 100%; display:flex; justify-content: space-around; align-items: center;">
+        <div class="circle red" id="circle1"></div>
+        <div><img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image" style="max-width: 400px;"></div>
+        <div class="circle green" id="circle2"></div>
+    </div>
+    <p class="bold-text" style="display:flex; justify-content: center;">{{ prediction_text }}</p>
+    
+    <div class="upload-wrapper">
+        <div class="red upload-box" onclick="location.href='/'">
+            <img src="{{ url_for('static', filename='assets/upload.png') }}" alt="Upload Logo">
+            Upload another image
+        </div>
+    </div>
+
+    <div style="margin-top: 1%; display: flex; flex-wrap: wrap; justify-content: center;">
+        <!-- Example images -->
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_1929.jpg') }}" alt="Safe Driving" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Safe Driving</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_8.jpg') }}" alt="Texting - Right" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Texting - Right</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_25.jpg') }}" alt="Talking on the Phone - Right" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Talking on the Phone - Right</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_27.jpg') }}" alt="Texting - Left" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Texting - Left</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_38.jpg') }}" alt="Talking on the Phone - Left" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Talking on the Phone - Left</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_20.jpg') }}" alt="Operating the Radio" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Operating the Radio</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_42.jpg') }}" alt="Drinking" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Drinking</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_30.jpg') }}" alt="Reaching Behind" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Reaching Behind</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_40.jpg') }}" alt="Distracted" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Distracted</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_36.jpg') }}" alt="Talking to Passenger" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Talking to Passenger</p>
+        </div>
+    </div>
+
+    <script>
+        const predicted = {{ predicted_class }};
+        var isRed = predicted !== 0;
+
+        // Get the circle elements
+        var circle1 = document.getElementById('circle1');
+        var circle2 = document.getElementById('circle2');
+
+        // Apply the class based on the condition
+        circle1.classList.remove('red', 'green');
+        circle2.classList.remove('red', 'green');
+
+        circle1.classList.add(isRed ? 'red' : 'darkred');
+        circle2.classList.add(!isRed ? 'green' : 'darkgreen');
+    </script>
+</body>
+</html>

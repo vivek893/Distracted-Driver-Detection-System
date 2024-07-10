@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload New File</title>
+    <style>
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+        }
+        .red {
+            background-color: red;
+        }
+        .green {
+            background-color: green;
+        }
+        .darkred {
+            background-color: #220000;
+        }
+        .darkgreen {
+            background-color: #001d00;
+            font-weight: bold;
+        }
+        body {
+            background-color: #f2f2f2;
+            font-weight: bold; /* Make all text bold */
+        }
+        .bold-text {
+            font-weight: bold;
+        }
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .file-input {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .file-input-label {
+            display: inline-block;
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-right: 10px; /* Add some space between the buttons */
+            border: none; /* Remove the border */
+        }
+        .upload-button {
+            background-color: skyblue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+        .file-upload-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Upload your driver picture</h1>
+    <div class="file-upload-container">
+        <form method="post" enctype="multipart/form-data" class="upload-form" onsubmit="return validateForm()">
+            <div class="form-row">
+                <div class="file-input-wrapper">
+                    <input type="file" name="file" class="file-input" id="file" onchange="displayFileName()">
+                    <label for="file" class="file-input-label">
+                        <img src="{{ url_for('static', filename='assets/upload.png') }}" alt="Upload Logo" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                        Choose File
+                    </label>
+                </div>
+                <input type="submit" value="Upload" class="upload-button">
+            </div>
+        </form>
+        <p id="file-name" style="margin-top: 10px;"></p>
+    </div>
+
+    <div style="margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: center;">
+        <!-- Example images -->
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_17.jpg') }}" alt="Safe Driving" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Safe Driving</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_8.jpg') }}" alt="Texting - Right" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Texting - Right</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_25.jpg') }}" alt="Talking on the Phone - Right" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Talking on the Phone - Right</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_27.jpg') }}" alt="Texting - Left" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Texting - Left</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_38.jpg') }}" alt="Talking on the Phone - Left" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Talking on the Phone - Left</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_20.jpg') }}" alt="Operating the Radio" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Operating the Radio</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_42.jpg') }}" alt="Drinking" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Drinking</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_30.jpg') }}" alt="Reaching Behind" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Reaching Behind</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_40.jpg') }}" alt="Distracted" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Distracted</p>
+        </div>
+        <div style="margin: 10px;">
+            <img src="{{ url_for('static', filename='assets/img_36.jpg') }}" alt="Talking to Passenger" style="max-width: 280px; height: auto;">
+            <p class="bold-text" style="text-align: center; font-size: smaller; margin-top: 10px;">Talking to Passenger</p>
+        </div>
+    </div>
+
+    <script>
+        function displayFileName() {
+            const fileInput = document.getElementById('file');
+            const fileName = fileInput.files[0].name;
+            document.getElementById('file-name').textContent = `Selected File: ${fileName}`;
+        }
+
+        function validateForm() {
+            const fileInput = document.getElementById('file');
+            if (fileInput.files.length === 0) {
+                alert('Please choose a file to upload.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
